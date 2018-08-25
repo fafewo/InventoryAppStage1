@@ -1,0 +1,53 @@
+<resources>
+    <string name="app_name">InventoryAppStage1</string>
+    <string name="action_save">Save</string>
+    <string name="action_insert_dummy_data">Insert test data</string>
+    <string name="action_delete_all_data">Delete all Products</string>
+    <string name="editor_add_product">Add a product</string>
+    <string name="editor_insert_product_successful">Product saved</string>
+    <string name="editor_insert_product_failed">Error with saving product</string>
+    <string name="editor_update_product_failed">updating the product was not successful</string>
+    <string name="editor_update_product_successful">successful update</string>
+    <string name="editor_delete_product_successful">Pet deleted</string>
+    <string name="editor_delete_product_failed">Product not deleted</string>
+    <string name="editor_edit_product">edit product</string>
+    <string name="delete_dialog_msg">Delete this product?</string>
+
+    <string name="Editor_activity_Product_detail">Product_details</string>
+
+
+    <string name="unsaved_changes_dialog_msg">Discard your changes and quit editing?</string>
+    <!-- Dialog button text for the option to discard a user's changes [CHAR LIMIT=20] -->
+    <string name="discard">Discard</string>
+    <!-- Dialog button text for the option to keep editing the current product [CHAR LIMIT=20] -->
+    <string name="keep_editing">Keep Editing</string>
+    <string name="action_delete">Delete</string>
+    <string name="category_specifications">specify the Product</string>
+    <string name="category_data">Enter data</string>
+    <string name="category_blank"></string>
+    <string name="hint_Product_name">name</string>
+    <string name="hint_Product_price"> Price per piece </string>
+    <string name="hint_Product_quantity">Quantity</string>
+    <string name="hint_Product_suppliername">Supplier name</string>
+    <string name="hint_Product_supplphonenr">Supplier contact</string>
+    <string name="unit_ordered_product">pieces</string>
+    <string name="empty_view_title_text">no products in your inventory yet</string>
+    <string name="empty_view_subtitle_text">to get started click on the shopping trolley button</string>
+
+    <string name="dialog_delete">Delete</string>
+    <string name="dialog_cancel">Cancel</string>
+    <string name="details_button_text">Details</string>
+    <string name="Sell_Button_Text">sell product</string>
+    <string name="buy_button_text">buy </string>
+    <!-- strings for product detail headlines -->
+    <string name="name">name</string>
+    <string name="quantity">quantity</string>
+    <string name="price">price</string>
+    <string name="company">manufacturer</string>
+    <string name="phoneNr">phone number</string>
+    <string name="Prod_Details">Product Details</string>
+    <string name="call">call manufacturer</string>
+    <string name="delete">delete Product</string>
+    
+
+</resources>

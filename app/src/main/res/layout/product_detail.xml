@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/name_pd"
+        style="@style/HeadlineStyle"
+        android:text="@string/name"/>
+
+    <TextView
+        android:id="@+id/name_pd_value"
+       style="@style/ValueStyle"
+        android:text="sodijf"/>
+
+    <TextView
+        android:id="@+id/price_pd"
+        style="@style/HeadlineStyle"
+        android:text="@string/price"/>
+
+    <TextView
+        android:id="@+id/price_pd_value"
+        style="@style/ValueStyle"
+        android:text="sdfgrtf"/>
+
+    <TextView
+        android:id="@+id/quantity_pd"
+        style="@style/HeadlineStyle"
+        android:text="@string/quantity"
+        android:layout_gravity="center_horizontal" />
+
+    <TextView
+        android:id="@+id/quantity_pd_value"
+        style="@style/ValueStyle"
+        android:text=""/>
+
+    <TextView
+        android:id="@+id/company_pd"
+        style="@style/HeadlineStyle"
+        android:text="@string/company"/>
+
+    <TextView
+        android:id="@+id/company_pd_value"
+        style="@style/ValueStyle"
+        android:text="dölfskg#röe"/>
+
+    <TextView
+        android:id="@+id/phone_pd"
+        style="@style/HeadlineStyle"
+        android:text="@string/phoneNr"/>
+
+    <TextView
+        android:id="@+id/phone_pd_value"
+        style="@style/ValueStyle"
+        android:text="5435"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center_horizontal">
+
+        <Button
+            android:id="@+id/sell_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/Sell_Button_Text"
+            android:background="@color/sell_button"
+            android:textColor="@color/light"
+            android:layout_margin="@dimen/activity_margin"/>
+
+        <Button
+            android:id="@+id/buy_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/buy_button_text"
+            android:background="@color/sell_button"
+            android:textColor="@color/light"
+            android:layout_margin="@dimen/activity_margin"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center_horizontal">
+
+        <Button
+            android:id="@+id/call_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/call"
+            android:background="@color/sell_button"
+            android:textColor="@color/light"
+            android:layout_margin="@dimen/activity_margin"/>
+
+        <Button
+            android:id="@+id/delete_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/delete"
+            android:background="@color/sell_button"
+            android:textColor="@color/light"
+            android:layout_margin="@dimen/activity_margin"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center_horizontal">
+
+        <Button
+            android:id="@+id/detail_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/editor_edit_product"
+            android:background="@color/sell_button"
+            android:textColor="@color/light"
+            android:layout_margin="@dimen/delete_button_margin"/>
+
+    </LinearLayout>
+
+</LinearLayout>
