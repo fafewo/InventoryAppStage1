@@ -1,7 +1,9 @@
 package com.example.android.inventoryappstage1;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.LoaderManager;
+import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.CursorLoader;
 import android.content.DialogInterface;
@@ -30,9 +32,9 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
     private Uri mCurrentProductUri;
     private String manufacturerContact;
 
-    private static final int EXISTING_PRODUCT_LOADER = 0;
+    private static final int EXISTING_PRODUCTLOADER = 0;
     @Override
-    protected void onCreate (Bundle savedInstanceState){
+    protected void onCreate (Bundle savedInstanceState) {
         super.onCreate( savedInstanceState );
         setContentView( R.layout.product_detail );
 
@@ -40,6 +42,11 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
         ((Button) findViewById( R.id.buy_button )).setOnClickListener( this );
         ((Button) findViewById( R.id.call_button )).setOnClickListener( this );
         ((Button) findViewById( R.id.delete_button )).setOnClickListener( this );
+
+        mCurrentProductUri = getIntent().getData();
+
+        getLoaderManager().initLoader( EXISTING_PRODUCTLOADER, null,this );
+
     }
 
     @Override
@@ -60,7 +67,7 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
     }
     @Override
     public void onLoadFinished(Loader<Cursor>loader, Cursor cursor){
-        //retutn when the cursor is null
+        //return when the cursor is null
         if (cursor == null || cursor.getCount()<1){
             return;
         }
@@ -72,10 +79,12 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
             int quantityColumnIndex = cursor.getColumnIndex( ProductContract.ProductEntry.COLUMN_PRODUCT_QUANTITY );
             int supplierColumnIndex = cursor.getColumnIndex( ProductEntry.COLUMN_PRODUCT_SUPPLIERNAME );
             int suppphoneColumnIndex = cursor.getColumnIndex( ProductEntry.COLUMN_PRODUCT_PHONENR );
-            //to get access to the phone number to use it for the call button
-            manufacturerContact = cursor.getString( Integer.parseInt( cursor.getString(   suppphoneColumnIndex ) ) );
+
             //to be able to change the value of the quantity
             prodQuantity = Integer.parseInt (cursor.getString( quantityColumnIndex ));
+            //to get access to the phone number to use it for the call button
+            manufacturerContact = String.valueOf( Integer.parseInt( cursor.getString(   suppphoneColumnIndex ) ) );
+
             //to read the attributes from the current product
             String prodName = cursor.getString( nameColumnIndex );
             int prodPrice = cursor.getInt( priceColumnIndex );
@@ -84,10 +93,10 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
             int prodsuppphone = cursor.getInt( suppphoneColumnIndex );
             //updateviews
             ((TextView) findViewById( R.id.name_pd_value )).setText( prodName );
-            ((TextView) findViewById( R.id.price_pd_value )).setText( prodPrice );
-            ((TextView) findViewById( R.id.quantity_pd_value )).setText( prodQuantity );
+            ((TextView) findViewById( R.id.price_pd_value )).setText( Integer.toString(prodPrice) );
+            ((TextView) findViewById( R.id.quantity_pd_value )).setText(Integer.toString (prodQuantity) );
             ((TextView) findViewById( R.id.company_pd_value )).setText( prodSupname );
-            ((TextView) findViewById( R.id.phone_pd_value )).setText( prodsuppphone );
+            ((TextView) findViewById( R.id.phone_pd_value )).setText(Integer.toString(prodsuppphone) );
         }
     }
 
@@ -98,25 +107,25 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
 
     @Override
     public void onClick(View v) {
-        ContentValues values = new ContentValues(  );
+        ContentValues change = new ContentValues(  );
         int updateProdQuantity;
 
         switch (v.getId()){
             //intent to make phonecall
             case R.id.call_button:
                 if (!TextUtils.isEmpty( manufacturerContact )){
-                    Intent intent = new Intent( Intent.ACTION_DIAL );
-                    intent.setData( Uri.parse( manufacturerContact ) );
-                    startActivity( intent );
+                    Intent call = new Intent( Intent.ACTION_DIAL );
+                    call.setData( Uri.parse("tel:" +  manufacturerContact ) );
+                    startActivity( call );
                 }
             break;
             //decreases quantity
             case R.id.sell_button: updateProdQuantity = prodQuantity - 1;
-            if (updateProdQuantity <= 0 ){
+            if (updateProdQuantity < 0 ){
                 Toast.makeText( v.getContext(), "no products here anymore",Toast.LENGTH_SHORT ).show();
             }else {
-                values.put( ProductEntry.COLUMN_PRODUCT_QUANTITY, updateProdQuantity );
-                int changedProduct =v.getContext().getContentResolver().update( mCurrentProductUri,values, null, null );
+                change.put( ProductEntry.COLUMN_PRODUCT_QUANTITY, updateProdQuantity );
+                int changedProduct =v.getContext().getContentResolver().update( mCurrentProductUri,change, null, null );
                 //log message, that updating the quantity failed, when it failed
                 if (changedProduct == 0){
                     Log.e( LOG_TAG , "updating quantity failed" );
@@ -125,8 +134,8 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
             break;
             //increases quantity
             case R.id.buy_button: updateProdQuantity = prodQuantity + 1;
-            values.put( ProductEntry.COLUMN_PRODUCT_QUANTITY, updateProdQuantity );
-            int changedProduct = v.getContext().getContentResolver().update( mCurrentProductUri,values,null,null );
+            change.put( ProductEntry.COLUMN_PRODUCT_QUANTITY, updateProdQuantity );
+            int changedProduct = v.getContext().getContentResolver().update( mCurrentProductUri,change,null,null );
                 //log message, that updating the quantity failed, when it failed
                 if (changedProduct == 0){
                     Log.e( LOG_TAG , "updating quantity failed" );
@@ -154,7 +163,6 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
         break;
-
         }
     }
     //perform deletion

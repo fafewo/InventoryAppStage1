@@ -62,7 +62,6 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
         }else {
             setTitle( getString( R.string.editor_edit_product ) );
             //loader to read data from the database
-            //HIER EVTL ÄNDERN DAS ARGS UND CALLBACK WEG SIND
            getLoaderManager().initLoader(EXISTING_PRODUCTLOADER,null, this);
         }
         //views to read user Input from
@@ -89,7 +88,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
         int quantity = Integer.parseInt( quantityString );
         String suppliernameString = mSuppNameEdit.getText().toString().trim();
         String phonenrString = mSuppPhoneEdit.getText().toString().trim();
-        int phonenr = Integer.parseInt( phonenrString );
+     //   int phonenr = Integer.parseInt( phonenrString );
         //create database helper
         ProductDbHelper mDbHelper = new ProductDbHelper( this );
         //get data repository in write mode
@@ -100,7 +99,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
         values.put( ProductContract.ProductEntry.COLUMN_PRODUCT_PRICE, price );
         values.put( ProductContract.ProductEntry.COLUMN_PRODUCT_QUANTITY, quantity);
         values.put( ProductContract.ProductEntry.COLUMN_PRODUCT_SUPPLIERNAME, suppliernameString );
-        values.put( ProductContract.ProductEntry.COLUMN_PRODUCT_PHONENR, phonenr );
+        values.put( ProductContract.ProductEntry.COLUMN_PRODUCT_PHONENR, phonenrString );
 
       //determine if this is a new or existing product, to determine check mCurrentProductUri
         if (mCurrentProductUri == null){
@@ -241,14 +240,14 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
             mPriceEdit.setText(Integer.toString( prodPrice ));
             mQuantityEdit.setText(Integer.toString( prodQuantity ));
             mSuppNameEdit.setText( prodSupname );
-            mSuppPhoneEdit.setText( Integer.toString(prodsuppphone) );
+            mSuppPhoneEdit.setText(Integer.toString( prodsuppphone) );
         }
     }
     @Override
     public void onLoaderReset(Loader<Cursor>loader){
         //clear the input fields when loader is invalid
         mProdNameEdit.setText( "" );
-        mPriceEdit.setText("" );
+        mPriceEdit.setText( "" );
         mQuantityEdit.setText( "" );
         mSuppNameEdit.setText( "" );
         mSuppPhoneEdit.setText( "" );

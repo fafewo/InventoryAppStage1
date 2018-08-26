@@ -8,7 +8,7 @@
     <string name="editor_insert_product_failed">Error with saving product</string>
     <string name="editor_update_product_failed">updating the product was not successful</string>
     <string name="editor_update_product_successful">successful update</string>
-    <string name="editor_delete_product_successful">Pet deleted</string>
+    <string name="editor_delete_product_successful">Product deleted</string>
     <string name="editor_delete_product_failed">Product not deleted</string>
     <string name="editor_edit_product">edit product</string>
     <string name="delete_dialog_msg">Delete this product?</string>

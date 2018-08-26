@@ -19,14 +19,14 @@
         </activity>
         <activity
             android:name=".EditorActivity"
-            android:label="@string/editor_add_product"
+            android:label="@string/editor_edit_product"
             android:theme="@style/AppTheme"
             android:parentActivityName=".CatalogActivity" >
-        <!-- Parent activity meta-data to support 4.0 and lower -->
-        <meta-data
-            android:name="android.support.PARENT_ACTIVITY"
-            android:value=".CatalogActivity" />
-    </activity>
+            <!--   Parent activity meta-data to support 4.0 and lower  -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".CatalogActivity" />
+        </activity>
         <activity
             android:name=".DetailActivity"
             android:label="@string/Prod_Details"
@@ -42,5 +42,6 @@
          android:name=".data.ProductProvider"
             android:exported="false"/>
     </application>
-
+    <uses-permission android:name="android.permission.CALL_PHONE" />
 </manifest>
+

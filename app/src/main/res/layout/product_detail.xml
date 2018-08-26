@@ -113,23 +113,4 @@
             />
 
     </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_gravity="center_horizontal">
-
-        <Button
-            android:id="@+id/detail_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:text="@string/editor_edit_product"
-            android:background="@color/sell_button"
-            android:textColor="@color/light"
-            android:layout_margin="@dimen/delete_button_margin"/>
-
-    </LinearLayout>
-
 </LinearLayout>

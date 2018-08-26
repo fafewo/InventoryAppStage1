@@ -70,7 +70,7 @@ public class ProductProvider extends ContentProvider {
             throw new IllegalArgumentException("the price of the product needs to be defined and greater 0");
         }
         Integer quantity = values.getAsInteger( ProductContract.ProductEntry.COLUMN_PRODUCT_QUANTITY );
-        if (quantity == null || quantity <=0){
+        if ( quantity == null || quantity < 0 ){
             throw new IllegalArgumentException( "the quantity needs to be greater 0" );
         }
         String supname = values.getAsString( ProductContract.ProductEntry.COLUMN_PRODUCT_SUPPLIERNAME );
@@ -128,7 +128,7 @@ public class ProductProvider extends ContentProvider {
         }
         if (values.containsKey( ProductContract.ProductEntry.COLUMN_PRODUCT_QUANTITY )) {
             Integer quantity = values.getAsInteger( ProductContract.ProductEntry.COLUMN_PRODUCT_QUANTITY );
-            if (quantity == null || quantity <= 0) {
+            if (quantity == null || quantity < 0) {
                 throw new IllegalArgumentException( "the quantity needs to be greater 0" );
             }
         }

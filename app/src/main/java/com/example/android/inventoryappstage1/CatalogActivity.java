@@ -3,6 +3,7 @@ package com.example.android.inventoryappstage1;
 import android.app.Activity;
 import android.app.LoaderManager;
 import android.content.ContentUris;
+import android.content.ContentValues;
 import android.content.CursorLoader;
 import android.content.Intent;
 import android.content.Loader;
@@ -20,10 +21,13 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 
 
-
+import com.example.android.inventoryappstage1.data.ProductContract;
 import com.example.android.inventoryappstage1.data.ProductContract.ProductEntry;
+
+import static com.example.android.inventoryappstage1.data.ProductProvider.LOG_TAG;
 
 //for displaying the product list
 public class CatalogActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
@@ -31,11 +35,14 @@ public class CatalogActivity extends AppCompatActivity implements LoaderManager.
     private static final int PRODUCT_LOADER = 0;
 
     ProductCursorAdapter mCursorAdapter;
+    private Uri mCurrentProductUri;
 
     @Override
     protected void onCreate(Bundle savedInsanceState) {
         super.onCreate( savedInsanceState );
         setContentView( R.layout.activity_catalog );
+
+        mCurrentProductUri = getIntent().getData();
 
         //make the fab open the EditorActivity
         FloatingActionButton fab = (FloatingActionButton) findViewById( R.id.fab );
@@ -48,15 +55,15 @@ public class CatalogActivity extends AppCompatActivity implements LoaderManager.
         } );
         //finding the listview populated with the data from the products
         ListView prodListView = (ListView) findViewById( R.id.list_view_product );
-        //set after find empty view to show the user what to do
 
+        //set after find empty view to show the user what to do
         View emptyView = findViewById( R.id.empty_view );
         prodListView.setEmptyView( emptyView );
         //adapter to create a list item for each row of data, pass null for cursor as no data until loader finishes
-        mCursorAdapter = new ProductCursorAdapter( this,null );
+        mCursorAdapter = new ProductCursorAdapter( this, null );
         prodListView.setAdapter( mCursorAdapter );
 
-        //on item click listener EVTL. MUSS ICH HIER DEN LISTENER IN DEN DETAIL VIEW VERLAGERN UM DANN DIE ENTSPRECEHNDE ROW ZU VERÄNDERN
+        //on item click listener
         prodListView.setOnItemClickListener( new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
@@ -66,15 +73,9 @@ public class CatalogActivity extends AppCompatActivity implements LoaderManager.
                 startActivity( intent );
             }
         } );
-
         //statrt loader
-        getLoaderManager().initLoader( PRODUCT_LOADER,null,this );
-
-
-
+        getLoaderManager().initLoader( PRODUCT_LOADER, null, this );
     }
-
-
 
     private void deleteEveryProduct() {
         int productsDeleted = getContentResolver().delete( ProductEntry.CONTENT_URI, null, null );
