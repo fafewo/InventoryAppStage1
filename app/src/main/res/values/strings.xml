@@ -11,6 +11,8 @@
     <string name="editor_delete_product_successful">Product deleted</string>
     <string name="editor_delete_product_failed">Product not deleted</string>
     <string name="editor_edit_product">edit product</string>
+    <string name="editor_add_Price">Price not inserted, edit in product details </string>
+    <string name="editor_add_Quantity">quantity not inserted, default quantity =1, edit in product details</string>
     <string name="delete_dialog_msg">Delete this product?</string>
 
     <string name="Editor_activity_Product_detail">Product_details</string>

@@ -24,13 +24,12 @@ public class ProductDbHelper extends SQLiteOpenHelper {
                 + ProductContract.ProductEntry.COLUMN_PRODUCT_PRICE + " INTEGER NOT NULL, "
                 + ProductContract.ProductEntry.COLUMN_PRODUCT_QUANTITY + " INTEGER NOT NULL, "
                 + ProductContract.ProductEntry.COLUMN_PRODUCT_SUPPLIERNAME + " TEXT, "
-                + ProductContract.ProductEntry.COLUMN_PRODUCT_PHONENR + " INTEGER NOT NULL); ";
+                + ProductContract.ProductEntry.COLUMN_PRODUCT_PHONENR + " TEXT NOT NULL);";
         //execute the sql statement
         db.execSQL( SQL_CREATE_PRODUCT_TABLE );
     }
     //to call when database needs an upgrade
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion){
-
     }
 }

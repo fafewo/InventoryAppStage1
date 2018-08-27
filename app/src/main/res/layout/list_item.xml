@@ -27,7 +27,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif-medium"
             android:textAppearance="?android:textAppearanceMedium"
-            android:textColor="#2B3D4D"  />
+            android:textColor="@color/colorAccent" />
 
         <TextView
 
@@ -44,7 +44,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif"
             android:textAppearance="?android:textAppearanceSmall"
-            android:textColor="#AEB6BD"  />
+            android:textColor="@color/colorAccent"  />
     </LinearLayout>
 
     <LinearLayout
@@ -64,7 +64,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="@dimen/activity_margin"
-        android:text="sdokfjs"/>
+        android:text="sdokfjs"
+        android:textColor="@color/colorAccent"
+        />
 
     </LinearLayout>
 

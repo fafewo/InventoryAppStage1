@@ -66,8 +66,8 @@ public class ProductProvider extends ContentProvider {
             throw new IllegalArgumentException( "Product needs to be named" );
         }
         Integer price = values.getAsInteger( ProductContract.ProductEntry.COLUMN_PRODUCT_PRICE);
-        if (price == null || price<=0 ) {
-            throw new IllegalArgumentException("the price of the product needs to be defined and greater 0");
+        if (price != null && price<0 ) {
+            throw new IllegalArgumentException(" negative not allowed price of the product needs to be defined ");
         }
         Integer quantity = values.getAsInteger( ProductContract.ProductEntry.COLUMN_PRODUCT_QUANTITY );
         if ( quantity == null || quantity < 0 ){
@@ -77,7 +77,7 @@ public class ProductProvider extends ContentProvider {
         if (supname == null){
             throw new IllegalArgumentException( "the name of the supplier needs to be entered " );
         }
-        Integer phone = values.getAsInteger( ProductContract.ProductEntry.COLUMN_PRODUCT_PHONENR );
+        String phone = values.getAsString( ProductContract.ProductEntry.COLUMN_PRODUCT_PHONENR );
         if (phone == null){
             throw new IllegalArgumentException( "phonenr needs to be entered" );
         }
@@ -122,8 +122,8 @@ public class ProductProvider extends ContentProvider {
         }
         if (values.containsKey( ProductContract.ProductEntry.COLUMN_PRODUCT_PRICE )) {
             Integer price = values.getAsInteger( ProductContract.ProductEntry.COLUMN_PRODUCT_PRICE );
-            if (price == null || price <= 0) {
-                throw new IllegalArgumentException( "the price of the product needs to be defined and greater 0" );
+            if (price != null && price < 0) {
+                throw new IllegalArgumentException( "the price of the product needs to be defined not negative" );
             }
         }
         if (values.containsKey( ProductContract.ProductEntry.COLUMN_PRODUCT_QUANTITY )) {

@@ -31,7 +31,6 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
     private int prodQuantity;
     private Uri mCurrentProductUri;
     private String manufacturerContact;
-
     private static final int EXISTING_PRODUCTLOADER = 0;
     @Override
     protected void onCreate (Bundle savedInstanceState) {
@@ -47,8 +46,18 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
 
         getLoaderManager().initLoader( EXISTING_PRODUCTLOADER, null,this );
 
-    }
+        final Button editButton = (Button)findViewById( R.id.edit_button );
+        editButton.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent editOpen = new Intent( DetailActivity.this, EditorActivity.class );
+                editOpen.setData( mCurrentProductUri );
+                startActivity( editOpen );
+                finish();
 
+            }
+        } );
+    }
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         //define projection that gives the columns from the table
@@ -63,7 +72,7 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
                 ProductEntry.COLUMN_PRODUCT_PHONENR
         };
         //loader to execute content provider query ona background thread
-        return new CursorLoader( this, ProductEntry.CONTENT_URI, projection, null, null, null );
+        return new CursorLoader( this, mCurrentProductUri, projection, null, null, null );
     }
     @Override
     public void onLoadFinished(Loader<Cursor>loader, Cursor cursor){
@@ -83,28 +92,25 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
             //to be able to change the value of the quantity
             prodQuantity = Integer.parseInt (cursor.getString( quantityColumnIndex ));
             //to get access to the phone number to use it for the call button
-            manufacturerContact = String.valueOf( Integer.parseInt( cursor.getString(   suppphoneColumnIndex ) ) );
+            manufacturerContact = String.valueOf( ( cursor.getString(   suppphoneColumnIndex ) ) );
 
             //to read the attributes from the current product
             String prodName = cursor.getString( nameColumnIndex );
             int prodPrice = cursor.getInt( priceColumnIndex );
             int prodQuantity = cursor.getInt( quantityColumnIndex );
             String prodSupname = cursor.getString( supplierColumnIndex );
-            int prodsuppphone = cursor.getInt( suppphoneColumnIndex );
+            String prodsuppphone = cursor.getString( suppphoneColumnIndex );
             //updateviews
             ((TextView) findViewById( R.id.name_pd_value )).setText( prodName );
             ((TextView) findViewById( R.id.price_pd_value )).setText( Integer.toString(prodPrice) );
             ((TextView) findViewById( R.id.quantity_pd_value )).setText(Integer.toString (prodQuantity) );
             ((TextView) findViewById( R.id.company_pd_value )).setText( prodSupname );
-            ((TextView) findViewById( R.id.phone_pd_value )).setText(Integer.toString(prodsuppphone) );
+            ((TextView) findViewById( R.id.phone_pd_value )).setText(prodsuppphone );
         }
     }
-
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
-
-    }
-
+        }
     @Override
     public void onClick(View v) {
         ContentValues change = new ContentValues(  );

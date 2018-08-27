@@ -8,12 +8,12 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
-//import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -83,25 +83,45 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
         //use trim to eliminate leading or trailing white spaces
         String nameString = mProdNameEdit.getText().toString().trim();
         String priceString = mPriceEdit.getText().toString().trim();
-        int price = Integer.parseInt( priceString );
         String quantityString = mQuantityEdit.getText().toString().trim();
-        int quantity = Integer.parseInt( quantityString );
         String suppliernameString = mSuppNameEdit.getText().toString().trim();
         String phonenrString = mSuppPhoneEdit.getText().toString().trim();
-     //   int phonenr = Integer.parseInt( phonenrString );
+
         //create database helper
         ProductDbHelper mDbHelper = new ProductDbHelper( this );
         //get data repository in write mode
         SQLiteDatabase db = mDbHelper.getWritableDatabase();
         //create ContentValues object, column names are keys and product attributes from the editor are values
         ContentValues values = new ContentValues(  );
-        values.put( ProductContract.ProductEntry.COLUMN_PRODUCT_NAME, nameString);
-        values.put( ProductContract.ProductEntry.COLUMN_PRODUCT_PRICE, price );
-        values.put( ProductContract.ProductEntry.COLUMN_PRODUCT_QUANTITY, quantity);
+        //tell the user the price an quantity field is empty
+
+        if (TextUtils.isEmpty( priceString ) || TextUtils.isEmpty( quantityString ) ){
+            Toast.makeText( this, getString( R.string.editor_add_Price ),Toast.LENGTH_SHORT ).show();
+            }
+
+            values.put( ProductContract.ProductEntry.COLUMN_PRODUCT_NAME, nameString);
+       //default value when no price is entered
+
+        if (TextUtils.isEmpty( priceString )) {
+           priceString = "0"; }
+           values.put( ProductContract.ProductEntry.COLUMN_PRODUCT_PRICE, Integer.parseInt( priceString) );
+
+        /// /default value when no quantity is entered because the user wants enter at least one product
+        if (TextUtils.isEmpty( quantityString )){
+            quantityString ="1";
+            Toast.makeText( this, getString( R.string.editor_add_Quantity ),Toast.LENGTH_LONG ).show();
+        }
+        values.put( ProductContract.ProductEntry.COLUMN_PRODUCT_QUANTITY, Integer.parseInt (quantityString));
+
+        if (TextUtils.isEmpty( suppliernameString )){
+            values.put( ProductEntry.COLUMN_PRODUCT_SUPPLIERNAME, "");
+        }else {
+            values.put( ProductEntry.COLUMN_PRODUCT_SUPPLIERNAME, suppliernameString );
+        }
         values.put( ProductContract.ProductEntry.COLUMN_PRODUCT_SUPPLIERNAME, suppliernameString );
         values.put( ProductContract.ProductEntry.COLUMN_PRODUCT_PHONENR, phonenrString );
 
-      //determine if this is a new or existing product, to determine check mCurrentProductUri
+        //determine if this is a new or existing product, to determine check mCurrentProductUri
         if (mCurrentProductUri == null){
             //this case new product following insert new product into provider returning the contetn uri
             Uri newUri = getContentResolver().insert( ProductEntry.CONTENT_URI,values);
@@ -129,6 +149,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
                         Toast.LENGTH_SHORT).show();
             }
         }
+        finish();
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -234,13 +255,13 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
             int prodPrice = cursor.getInt( priceColumnIndex );
             int prodQuantity = cursor.getInt( quantityColumnIndex );
             String prodSupname = cursor.getString( supplierColumnIndex );
-            int prodsuppphone = cursor.getInt( suppphoneColumnIndex );
+            String prodsuppphone = cursor.getString( suppphoneColumnIndex );
             //updateviews
             mProdNameEdit.setText( prodName );
             mPriceEdit.setText(Integer.toString( prodPrice ));
             mQuantityEdit.setText(Integer.toString( prodQuantity ));
             mSuppNameEdit.setText( prodSupname );
-            mSuppPhoneEdit.setText(Integer.toString( prodsuppphone) );
+            mSuppPhoneEdit.setText( prodsuppphone );
         }
     }
     @Override
