@@ -19,7 +19,6 @@ public class ProductProvider extends ContentProvider {
         mDbHelper = new ProductDbHelper( getContext() );
         return true;
     }
-
     //perform the query for the URI
     @Override
     public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder){

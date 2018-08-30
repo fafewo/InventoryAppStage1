@@ -7,7 +7,7 @@ import android.provider.BaseColumns;
 public class ProductContract {
     private ProductContract(){}
 
-    //the contetn authority
+    //the content authority
     public static final String CONTENT_AUTHORITY ="com.example.android.inventoryappstage1";
 
     //create the base of the URI to make contact from other apps possible

@@ -86,7 +86,6 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
         String quantityString = mQuantityEdit.getText().toString().trim();
         String suppliernameString = mSuppNameEdit.getText().toString().trim();
         String phonenrString = mSuppPhoneEdit.getText().toString().trim();
-
         //create database helper
         ProductDbHelper mDbHelper = new ProductDbHelper( this );
         //get data repository in write mode
@@ -94,33 +93,33 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
         //create ContentValues object, column names are keys and product attributes from the editor are values
         ContentValues values = new ContentValues(  );
         //tell the user the price an quantity field is empty
+        values.put( ProductContract.ProductEntry.COLUMN_PRODUCT_NAME, nameString);
 
-        if (TextUtils.isEmpty( priceString ) || TextUtils.isEmpty( quantityString ) ){
-            Toast.makeText( this, getString( R.string.editor_add_Price ),Toast.LENGTH_SHORT ).show();
-            }
-
-            values.put( ProductContract.ProductEntry.COLUMN_PRODUCT_NAME, nameString);
-       //default value when no price is entered
-
+        //default value when no price is entered
         if (TextUtils.isEmpty( priceString )) {
-           priceString = "0"; }
-           values.put( ProductContract.ProductEntry.COLUMN_PRODUCT_PRICE, Integer.parseInt( priceString) );
-
-        /// /default value when no quantity is entered because the user wants enter at least one product
+           priceString = "0";
+        }
+        values.put( ProductContract.ProductEntry.COLUMN_PRODUCT_PRICE, Integer.parseInt( priceString) );
+        //default value when no quantity is entered because the user wants enter at least one product
         if (TextUtils.isEmpty( quantityString )){
-            quantityString ="1";
-            Toast.makeText( this, getString( R.string.editor_add_Quantity ),Toast.LENGTH_LONG ).show();
+            quantityString ="0";
+        //    Toast.makeText( this, getString( R.string.editor_add_Quantity ),Toast.LENGTH_LONG ).show();
         }
         values.put( ProductContract.ProductEntry.COLUMN_PRODUCT_QUANTITY, Integer.parseInt (quantityString));
-
-        if (TextUtils.isEmpty( suppliernameString )){
-            values.put( ProductEntry.COLUMN_PRODUCT_SUPPLIERNAME, "");
-        }else {
-            values.put( ProductEntry.COLUMN_PRODUCT_SUPPLIERNAME, suppliernameString );
-        }
+        values.put( ProductEntry.COLUMN_PRODUCT_SUPPLIERNAME, suppliernameString );
         values.put( ProductContract.ProductEntry.COLUMN_PRODUCT_SUPPLIERNAME, suppliernameString );
-        values.put( ProductContract.ProductEntry.COLUMN_PRODUCT_PHONENR, phonenrString );
+        values.put(ProductContract.ProductEntry.COLUMN_PRODUCT_PHONENR, phonenrString);
+        //default value when no phonenumber is entered is entered because the user wants enter at least one product
+        if (TextUtils.isEmpty( phonenrString )){
+            phonenrString ="0";}
 
+        //check if all fields are filled in
+        if(suppliernameString != null && nameString != null  && quantityString != "0" && priceString != "0" && phonenrString != "0"){
+            finish();
+        }else {
+            Toast.makeText( this, getString( R.string.editor_fill_all_fields ),Toast.LENGTH_SHORT ).show();
+            return;
+        }
         //determine if this is a new or existing product, to determine check mCurrentProductUri
         if (mCurrentProductUri == null){
             //this case new product following insert new product into provider returning the contetn uri
@@ -149,7 +148,6 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
                         Toast.LENGTH_SHORT).show();
             }
         }
-        finish();
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -175,8 +173,6 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
             case R.id.action_save:
                 // save product to database
                 saveProduct();
-                //exit activity
-                finish();
                 return true;
             // Response to a click on the "Delete" button
             case R.id.action_delete:

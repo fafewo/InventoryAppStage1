@@ -1,9 +1,8 @@
 package com.example.android.inventoryappstage1;
 
-import android.app.Activity;
+
 import android.app.AlertDialog;
 import android.app.LoaderManager;
-import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.CursorLoader;
 import android.content.DialogInterface;

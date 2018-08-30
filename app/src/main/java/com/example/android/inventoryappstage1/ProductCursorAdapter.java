@@ -94,13 +94,12 @@ public  class ProductCursorAdapter extends CursorAdapter implements View.OnClick
                 }
             }
         } );
-
     }
 
     @Override
     public void onClick(View v) {
         // this view is not unused as I implemented a  View.OnClickListener in the class and without this
         // view the class needs to be declared abstract and cannot be instantiated afterwards.
-        // It's becauase the onClick I wanted to use is inside the class I guess ?
+        // It's becauase the onClick I wanted to use is inside the class I guess !?
     }
 }

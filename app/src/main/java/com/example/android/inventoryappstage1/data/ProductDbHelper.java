@@ -4,7 +4,6 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import static java.sql.Types.INTEGER;
 
 public class ProductDbHelper extends SQLiteOpenHelper {
     public static final String LOG_TAG = ProductDbHelper.class.getSimpleName();
